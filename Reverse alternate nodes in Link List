@@ -1,0 +1,30 @@
+/* 
+Given a linked list, you have to perform the following task:
+
+Extract the alternative nodes starting from second node.
+Reverse the extracted list.
+Append the extracted list at the end of the original list.
+Note: Try to solve the problem without using any extra memory.
+*/
+
+class Solution
+{
+    public static void rearrange(Node odd)
+    {
+        if(odd.next == null) return;
+        Node sec = null;
+        Node curr = odd;
+        Node temp = odd.next;
+        
+        while(temp != null){
+            curr.next = temp.next;
+            temp.next = sec;
+            sec = temp;
+            
+            if(curr.next == null) break;
+            curr = curr.next;
+            temp = curr.next;
+        }
+        curr.next = sec;
+    }
+}
