@@ -1,6 +1,10 @@
 class Solution
 {
     //Function to find the smallest positive number missing from the array.
+
+    //<-------------------------------------------------------------------------------O(nlogn)--------------------------------------------------------------------------------> time complexity
+
+
     static int missingNumber(int arr[], int size)
     {
         Arrays.sort(arr);
@@ -15,5 +19,35 @@ class Solution
            i++;
         }
         return temp;
+    }
+}
+
+// 2 method;
+class Solution
+{
+    //Function to find the smallest positive number missing from the array.
+
+    //<--------------------------------------------------------------------------------------O(n) complexity---------------------------------------------------------------------------------------->
+
+
+    static int missingNumber(int arr[], int size)
+    {
+        for(int i=0; i<size; i++){
+            if(arr[i] >= 1 && arr[i]<=size){
+                int position  = arr[i] - 1;
+                
+                if(arr[position] != position + 1){
+                    int temp = arr[position];
+                    arr[position] = arr[i];
+                    arr[i] = temp;
+                    i--;
+                }
+            }
+            
+            }
+            for(int i=0; i<size; i++){
+                if(arr[i] != i+1) return i+1;
+        }
+        return size+1;
     }
 }
