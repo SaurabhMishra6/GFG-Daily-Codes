@@ -1,0 +1,46 @@
+/*
+Given a string you need to print the size of the longest possible substring that has exactly K unique characters. If there is no possible substring then print -1.
+*/
+
+<------------------------------------------------Code---------------------------------------->
+----------------------------------------------------------------------------------------------
+
+class Solution {
+    public int longestkSubstr(String s, int k) {
+        // code here
+        int n = s.length();
+        int i=0; 
+        int j=0;
+        int ans = -1;
+        HashMap<Character, Integer> map = new HashMap<>();
+        
+        while(j<n){
+           //Calculation
+            char ch = s.charAt(j);
+            //get the frequency of ch from Map and then increase it by 1 in the map.
+            int chFrequencyInMap =   map.getOrDefault(ch,0);
+            map.put(ch, chFrequencyInMap+1); //increase the frequency of current character in Map
+           
+            //Sliding Window Condition: hashmap.size = k  [OR number of Unique Characters =k];
+            if (map.size()>k){  /*Reduce the frequency of ith element by 1 and remove it from map if frequency becomes 0.
+                                                 Keep doing above [reducing window size] till hm.size becomes <=k  */
+                while(map.size()>k){
+                    char iChar = s.charAt(i);
+                    int freqiChar = map.get(iChar);
+                    map.put(iChar, freqiChar-1);
+                    if (map.get(iChar)==0)
+                        map.remove(iChar);
+                    i++;
+                }
+            }
+
+            if(map.size() == k){ //unique chars = k , compute candidate answer.
+                int currentAns = j-i+1;
+                ans = Math.max(ans,currentAns);
+            }
+
+            j++; // increase window size and look for next window where sum = target
+        }
+        return ans;
+        }
+    }
