@@ -1,0 +1,53 @@
+/*
+Given an array arr[ ] of size N having elements, the task is to find the next greater element for each element of the array in order of their appearance in the array.
+Next greater element of an element in the array is the nearest element on the right which is greater than the current element.
+If there does not exist next greater of current element, then next greater element for current element is -1. For example, next greater of the last element is always -1.
+*/
+-------------------------------------->>
+--------------------------------->>
+
+Time Complexity ->>>>O(n)
+Space Complexity ->>>>O(n)
+
+------------------------------------------->>
+-------------------------------------->>
+
+<-------------------------------------------------------------------------------------CODE------------------------------------------------------------------------------------------>
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+class Solution
+{
+    //Function to find the next greater element for each element of the array.
+    public static long[] nextLargerElement(long[] arr, int n)
+    { 
+        ArrayList<Long> list = new ArrayList<>();
+        Stack<Long> st = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (st.empty()) {
+                list.add(-1L);
+            } else if (st.size() > 0 && st.peek() > arr[i]) {
+                list.add(st.peek());
+            } else if (st.size() > 0 && st.peek() <= arr[i]) {
+                while (!st.empty() && st.peek() <= arr[i]) {
+                    st.pop();
+                }
+                if (st.empty()) {
+                    list.add(-1L);
+                } else {
+                    list.add(st.peek());
+                }
+            }
+            st.push(arr[i]);
+        }
+
+        Collections.reverse(list); // Reverse the list.
+
+        // Convert ArrayList to an array.
+        long[] result = new long[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+
+        return result;
+    } 
+}
