@@ -1,0 +1,34 @@
+/*
+You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+Return the max sliding window.
+*/
+
+<..............................................................................CODE.....................................................................................................>
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+         int n = nums.length;
+        Deque<Integer> dq = new ArrayDeque<>();
+        int i = 0, j = 0;
+        int[] ans = new int[n - k + 1]; // The size of the result array
+
+        while (j < n) {
+            while (!dq.isEmpty() && dq.peekLast() < nums[j]) {
+                dq.pollLast();
+            }
+            dq.offerLast(nums[j]);
+
+            if (j - i + 1 == k) {
+                ans[j - k + 1] = dq.peekFirst(); // Store the maximum value
+                if (nums[i] == dq.peekFirst()) {
+                    dq.pollFirst();
+                }
+                i++;
+            }
+            j++;
+        }
+
+        return ans;
+    }
+}
