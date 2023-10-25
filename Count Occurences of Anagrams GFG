@@ -1,0 +1,69 @@
+/*
+Given a word pat and a text txt. Return the count of the occurrences of anagrams of the word in the text.
+*/
+
+<------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+----------------------------------------------------------------------------------CODE------------------------------------------------------------------------------------------------------------------
+class Solution {
+
+    int search(String pat, String txt) {
+        int k = pat.length();
+        int n = txt.length();
+        int i=0;
+        int j=0;
+        int ans=0;
+        
+        
+        // First work to make hashmap for pat String;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int x=0; x<pat.length(); x++){
+             char ch = pat.charAt(x);
+            if(map.containsKey(ch)){
+                map.put(ch, map.get(ch)+1);
+            }else {
+                map.put(ch, 1);
+            }
+            
+        }
+        
+        int count = map.size();
+        
+        //second work is calculation 
+        while(j<n){
+            
+            //third is to chechk if txt is present or not in map
+            char cha = txt.charAt(j);
+            if(map.containsKey(cha)){
+                map.put(cha, map.get(cha)-1);
+                
+                if(map.get(cha) == 0) count--;
+            }
+            //4 work
+            if((j-i+1) < k){
+                j++;
+            }
+             
+            
+            else if((j-i+1) == k){
+                //find ans and slide the windows
+                
+                if(count == 0){
+                    ans++;
+                }
+                
+                //next slid the window(Before moving window we will undo the chances of previous start (if in map))
+                char chI = txt.charAt(i);
+                if(map.containsKey(chI) && map.get(chI) == 0){
+                    map.put(chI, map.get(chI)+1);
+                    count++;
+                }else if(map.containsKey(chI)){
+                    map.put(chI, map.get(chI)+1);
+                }
+                    i++;
+                    j++;
+            }
+        }
+        return ans;
+        
+    }
+}
