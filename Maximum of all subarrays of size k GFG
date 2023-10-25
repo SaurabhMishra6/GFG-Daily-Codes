@@ -1,0 +1,35 @@
+/*
+Given an array arr[] of size N and an integer K. Find the maximum for each and every contiguous subarray of size K.
+*/
+
+<----------------------------------------------------------------------------CODE..............................................................................................................>
+class Solution
+{
+    //Function to find maximum of each subarray of size k.
+    static ArrayList <Integer> max_of_subarrays(int arr[], int n, int k)
+    {
+        Deque<Integer> dq = new ArrayDeque<>();
+        int i = 0, j = 0;
+        ArrayList<Integer> ans = new ArrayList<>();
+        int max = Integer.MIN_VALUE;
+
+        while (j < n) {
+            while (!dq.isEmpty() && dq.peekLast() < arr[j]) {
+                dq.pollLast();
+            }
+            dq.offerLast(arr[j]);
+
+            if (j - i + 1 == k) {
+                ans.add(dq.peekFirst());
+
+                if (arr[i] == dq.peekFirst()) {
+                    dq.pollFirst();
+                }
+                i++;
+            }
+            j++;
+        }
+
+        return ans;
+    }
+}
