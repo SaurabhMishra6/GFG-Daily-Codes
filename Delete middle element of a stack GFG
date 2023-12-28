@@ -1,0 +1,38 @@
+Input: 
+Stack = {10, 20, 30, 40, 50}
+Output:
+ModifiedStack = {10, 20, 40, 50}
+Explanation:
+If you print the stack the bottom-most element will be 10 and the top-most element will be 50. Middle element will be element at index 3 from bottom, which is 30. Deleting 30, stack will look like {10 20 40 50}.
+
+<-----------------------------------------------------------------------------CODE----------------------------------------------------------------------------------------->
+----------------------------------------------------------------------Using Recursion----------------------------------------------------------------------------------------
+
+class Solution
+{
+    //Function to delete middle element of a stack.
+    public void deleteMid(Stack<Integer>s,int sizeOfStack){
+        // code here
+        int k = ((sizeOfStack/2) + 1);
+        
+        if(s.size() == 0) return;
+        
+        //Hypothesis...
+        solve(s, k);
+        return;
+    } 
+    
+        private static void solve(Stack<Integer> s, int k){
+            //Base Codition...
+            if(k == 1){
+                s.pop();
+                return;
+            }
+            
+            //Induction...
+            int temp = s.peek();
+            s.pop();
+            solve(s, k-1);
+            s.push(temp);
+        }
+}
