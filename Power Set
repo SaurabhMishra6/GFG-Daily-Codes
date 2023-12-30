@@ -1,0 +1,43 @@
+Input : str = "abc"
+Output: a ab abc ac b bc c
+Explanation : There are 7 subsequences that 
+can be formed from abc.
+
+<---------------------------------------------------------------------------------------CODE----------------------------------------------------------------------------------------->
+
+class Solution
+{
+    public List<String> AllPossibleStrings(String s)
+    {
+        ArrayList<String> list = new ArrayList<String>();
+        findAllSubsets(s, "", list);
+		Collections.sort(list);
+		return list;
+    }
+    public static void findAllSubsets(String str,String output, ArrayList<String> list) {
+        //Base condition
+		if(str.length() == 0) {
+			if (!output.isEmpty()) {
+                list.add(output);
+            }
+            return;
+		}
+		
+		//we have to make two new output from main output
+		String output1 = output;
+		String output2 = output;
+        
+        //int he first output we are not chose the and in the second output we go with word
+        //so first output is same but second one gona be change and it with go with index 0
+		output2 = output2 + str.charAt(0);
+		
+		//Erage the 0th index letter in string and moved
+		//this line of code indicate we make a new substring of str which is start with 1 index
+		//means we erage the 0th one.
+		str = str.substring(1, str.length());
+		
+		//Call again these functions in both chile node.
+		findAllSubsets(str, output1,list);
+		findAllSubsets(str, output2,list);
+    }
+}
