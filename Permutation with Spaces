@@ -1,0 +1,44 @@
+/*
+Given a string you need to print all possible strings that can be made by placing spaces (zero or one) in between them. The output should be printed in sorted increasing order of strings
+
+Example 1:
+
+Input:
+S = "ABC"
+Output: (A B C)(A BC)(AB C)(ABC)
+Explanation:
+ABC
+AB C
+A BC
+A B C
+These are the possible combination of "ABC".
+*/
+
+<-----------------------------------------------------------------------------CODE USING Recursion------------------------------------------------------------------------------>
+________________________________________________________________________________________________________________________________________________________________________________
+
+class Solution{
+    
+    ArrayList<String> permutation(String S) {
+        ArrayList<String> list = new ArrayList<>();
+        withSpaces(S.substring(1), String.valueOf(S.charAt(0)), list);
+        Collections.sort(list);
+        return list;
+    }
+
+    static void withSpaces(String s, String output, ArrayList<String> list) {
+        if (s.isEmpty()) {
+            list.add(output);
+            return;
+        }
+
+        char c = s.charAt(0);
+
+        String output1 = output + c; // without space
+        String output2 = output + " " + c; // with space
+
+        withSpaces(s.substring(1), output1, list); // recursion first bubble
+        withSpaces(s.substring(1), output2, list); // recursion second bubble
+    }
+    
+}
